@@ -50,6 +50,12 @@ private:
 	UPROPERTY(EditAnywhere, Category = Setup)
 		TSubclassOf<AProjectile> ProjectileBlueprint;
 
+	
+	float ReloadTimeInSeconds = 3;
+
+	double LastFireTime = 0;
+
 	UTankBarrel* Barrel = nullptr; // local barrel reference for spawning projectile
+
 
 };
