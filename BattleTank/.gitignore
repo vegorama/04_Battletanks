@@ -74,5 +74,5 @@ Intermediate/*
 # Cache files for the editor to use
 DerivedDataCache/*
 
-# Unreal content
-Content/*
+# Starter Content
+Content/StarterContent
