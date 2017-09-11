@@ -7,6 +7,7 @@
 #include "TankMovementComponent.generated.h"
 
 class UTankTrack;
+class UNavMovementCompnent;
 
 
 /**
@@ -31,8 +32,12 @@ public:
 		UFUNCTION(BlueprintCallable)
 		void IntendTurnLeft(float Throw);
 
+		virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
+
 private:
 	UTankTrack* LeftTrack = nullptr;
 	UTankTrack* RightTrack = nullptr;
+
+
 	
 };
