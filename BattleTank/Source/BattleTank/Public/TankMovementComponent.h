@@ -7,7 +7,7 @@
 #include "TankMovementComponent.generated.h"
 
 class UTankTrack;
-class UNavMovementCompnent;
+class UNavMovementComponent;
 
 
 /**
@@ -37,7 +37,5 @@ public:
 private:
 	UTankTrack* LeftTrack = nullptr;
 	UTankTrack* RightTrack = nullptr;
-
-
 	
 };
