@@ -39,6 +39,7 @@ protected:
 	UTankMovementComponent* TankMovementComponent = nullptr;
 
 
+
 private:
 	// Sets default values for this pawn's properties
 	ATank();
@@ -55,6 +56,8 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 		TSubclassOf<AProjectile> ProjectileBlueprint;
 
+	UPROPERTY(VisibleDefaultsOnly)
+		UStaticMeshComponent* TankBody;
 	
 	float ReloadTimeInSeconds = 3;
 

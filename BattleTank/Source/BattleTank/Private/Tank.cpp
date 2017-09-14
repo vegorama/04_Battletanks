@@ -8,14 +8,18 @@
 #include "TankMovementComponent.h"
 
 
-// Sets default values
+// Sets default values THIS IS THE CONSTRUCTOR I THINK
 ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
+	TankBody = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("TankBody"));
+	RootComponent = TankBody;
+
 	// No need to protect pointers as added at construction
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
+	TankAimingComponent->SetupAttachment(TankBody);
 }
 
 // Called when the game starts or when spawned
