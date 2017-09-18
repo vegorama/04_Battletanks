@@ -26,7 +26,7 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-	EFiringStatus FiringStatus = EFiringStatus::Reloading;
+	EFiringStatus FiringStatus = EFiringStatus::Aiming;
 
 
 public:
