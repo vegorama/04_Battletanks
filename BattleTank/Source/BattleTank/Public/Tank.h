@@ -9,7 +9,6 @@
 // forward declarations
 class UTankBarrel;
 class UTankAimingComponent;
-class UTankMovementComponent;
 class UTankTurret;
 class AProjectile;
 
@@ -29,9 +28,6 @@ public:
 protected:
 	UPROPERTY(BlueprintReadOnly)
 	UTankAimingComponent* TankAimingComponent = nullptr;
-
-	UPROPERTY(BlueprintReadOnly)
-	UTankMovementComponent* TankMovementComponent = nullptr;
 
 
 private:
