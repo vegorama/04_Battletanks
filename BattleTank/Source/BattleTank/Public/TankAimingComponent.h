@@ -50,6 +50,8 @@ private:
 	void MoveBarrelTowards(FVector AimDirection);
 	void MoveTurretTowards(FVector AimDirection);
 
+	bool IsBarrelMoving();
+
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
 
@@ -64,6 +66,7 @@ private:
 
 	double LastFireTime = 0;
 
+	FVector AimDirection;
 
 	//UPROPERTY(VisibleDefaultsOnly)   do i need this? TODO delete it maybe??
 	//	UStaticMeshComponent* TankBody;
