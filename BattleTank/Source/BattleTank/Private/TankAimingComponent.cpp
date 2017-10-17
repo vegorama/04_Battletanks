@@ -33,7 +33,11 @@ void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* Tur
 
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
-	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
+	if (RoundsLeft <= 0)
+	{
+		FiringStatus = EFiringStatus::OutOfAmmo;
+	}
+	else if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
 	{
 		FiringStatus = EFiringStatus::Reloading;
 	}
@@ -45,6 +49,11 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 	{
 		FiringStatus = EFiringStatus::Locked;
 	}
+}
+
+int UTankAimingComponent::GetRoundsLeft() const
+{
+	return RoundsLeft;
 }
 
 EFiringStatus UTankAimingComponent::GetFiringState() const
@@ -105,11 +114,12 @@ void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - TurretRotator;
 
-	if (DeltaRotator.Yaw < 180)
+	//find the shortest way
+	if (FMath::Abs(DeltaRotator.Yaw) < 180)
 	{
 		Turret->Rotate(DeltaRotator.Yaw);
 	}
-	else
+	else //avoid the long way round
 	{
 		Turret->Rotate(-DeltaRotator.Yaw);
 	}
@@ -117,24 +127,26 @@ void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
 
 void UTankAimingComponent::Fire()
 {
-	
-	if (FiringStatus !=EFiringStatus::Reloading)
-	{
-		if (!ensure(Barrel)) { return; }
-		if (!ensure(ProjectileBlueprint)) { return; }
-		//Spawn projectile at socket location
-		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
-			ProjectileBlueprint,
-			Barrel->GetSocketLocation(FName("Projectile")),
-			Barrel->GetSocketRotation(FName("Projectile"))
-			);
+		if (FiringStatus == EFiringStatus::Locked || FiringStatus == EFiringStatus::Aiming)
+			{
+				if (!ensure(Barrel)) { return; }
+				if (!ensure(ProjectileBlueprint)) { return; }
+				//Spawn projectile at socket location
+				auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+					ProjectileBlueprint,
+					Barrel->GetSocketLocation(FName("Projectile")),
+					Barrel->GetSocketRotation(FName("Projectile"))
+					);
 
-		//Launch it
-		//TODO BUSTED this 5000 should be gone but we refactored that shit out
-		float LaunchSpeed = 5000;
-		Projectile->LaunchProjectile(LaunchSpeed);
-		LastFireTime = FPlatformTime::Seconds();
-
-	}
+				//Launch it
+				//TODO BUSTED this 5000 should be gone but we refactored that shit out
+				float LaunchSpeed = 5000;
+				Projectile->LaunchProjectile(LaunchSpeed);
+				LastFireTime = FPlatformTime::Seconds();
+				//decrease ammo
+				RoundsLeft = (RoundsLeft--);
+			}
 }
+
+
 
