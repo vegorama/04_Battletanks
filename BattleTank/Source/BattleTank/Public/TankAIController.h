@@ -20,6 +20,11 @@ private:
 
 	virtual void Tick(float DeltaSeconds) override;
 
-	float AcceptanceRadius = 3000;
+	float TrackMaxDrivingForce = 40;
+
+protected:
+	//how close should AI get?
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float AcceptanceRadius = 8000;
 
 };
