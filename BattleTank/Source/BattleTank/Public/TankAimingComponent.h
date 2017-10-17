@@ -37,7 +37,9 @@ public:
 	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = "Firing")
-		void Fire();
+	void Fire();
+
+	EFiringStatus GetFiringState() const;
 	
 private:
 	// Sets default values for this component's properties
