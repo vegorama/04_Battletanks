@@ -20,7 +20,12 @@ private:
 
 	virtual void Tick(float DeltaSeconds) override;
 
+	virtual void SetPawn(APawn* InPawn) override;
+
 	float TrackMaxDrivingForce = 40;
+
+	UFUNCTION()
+	void OnPossessedTankDeath();
 
 protected:
 	//how close should AI get?
